@@ -7,7 +7,7 @@ C:\Users\newhyodong\daou\log
 C:\Users\newhyodong\daou
 
 
-#작업내용
+# 작업내용
 
 1. 스케쥴러를 통한 결제정보 저정 api 구현
 
@@ -22,7 +22,7 @@ C:\Users\newhyodong\daou
 - test code (진행중)
 
 
-#서버구동 방법
+# 서버구동 방법
 
 1. data.sql에 쿼리문으로 h2디비에 데이터 생성
 
