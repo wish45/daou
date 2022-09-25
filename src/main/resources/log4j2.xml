@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	Logging Level
+	OFF로 설정시 출력하지 않는다.
+	ALL로 설정시 TRACE와 같은 설정을 제공.
+
+	trace < debug < info < warn < error
+	낮음 		-		보통		-		위험
+	하위단계의 로깅 레벨은 상위단계의 로그를 포함한다.
+	ex) info로 설정할 시 info, warn, error 로그를 포함하여 출력
+ -->
+<Configuration>
+
+    <!-- 해당 설정파일에서 사용하는 프로퍼티-->
+    <Properties>
+        <property name="LOGS_PATH">C:/Users/newhyodong/daou/log</property>
+        <Property name="layoutPattern">%d{yyyy-MM-dd HH:mm:ss} %5p [%c] %m%n</Property>
+        <Property name="PID">${sys:PID}</Property>
+    </Properties>
+
+    <Appenders>
+        <!-- 콘솔 -->
+        <Console name="console" target="SYSTEM_OUT">
+        </Console>
+
+        <!-- 파일 -->
+        <RollingFile name ="RollingFile">
+            <FileName>${LOGS_PATH}/${date:YYYY}${date:MM}${date:DD}${date:HH}.log</FileName>
+            <FilePattern>${LOGS_PATH}/_%d{yyyy-MM-dd}_%i.log</FilePattern>
+            <PatternLayout>
+                <Pattern>${layoutPattern}</Pattern>
+            </PatternLayout>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="100MB"/>
+                <TimeBasedTriggeringPolicy interval = "1" modulate = "true"/>
+            </Policies>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+        <!-- Application Loggers -->
+        <!-- Root 보다 우선 순위가 높습니다. -->
+        <logger name="com.test.api.controller" level="INFO" additivity="false">
+            <AppenderRef ref="console" />
+            <AppenderRef ref="RollingFile" />
+        </logger>
+
+        <logger name="com.test.api.service" level="INFO" additivity="false">
+            <AppenderRef ref="console" />
+            <AppenderRef ref="RollingFile" />
+        </logger>
+
+        <!-- FATAL, ERROR, WARN, INFO, DEBUG, TRACE -->
+        <Root level="INFO">
+            <AppenderRef ref="console" />
+            <AppenderRef ref="RollingFile" />
+        </Root>
+    </Loggers>
+</Configuration>
