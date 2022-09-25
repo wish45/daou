@@ -29,9 +29,9 @@ C:\Users\newhyodong\daou
 2. http://localhost:8080/api/authenticate  를 호출하여 token 생성
 
 3. api 호출
-get- http://localhost:8080/payment
-post- http://localhost:8080/payment
-del - http://localhost:8080/payment/deletePayment
-patch - http://localhost:8080/payment/updatePayment
+<ol>get- http://localhost:8080/payment
+<ol>post- http://localhost:8080/payment
+<ol>del - http://localhost:8080/payment/deletePayment
+<ol>patch - http://localhost:8080/payment/updatePayment
 
 4. 스케쥴러는 매 12시정각에 C:\Users\newhyodong\daou 위치에서 데이터를 읽어서 디비에 저장.
