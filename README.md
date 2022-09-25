@@ -16,10 +16,10 @@ C:\Users\newhyodong\daou
 <ol>aop를 통한 메서드 전후에 실행시간 로그기록</ol>
 
 3. api호출시 spring security를 통한 인증 및 인가 작업 구현
-<ol>rate limit(진행중)</ol>
+<ol> - rate limit(진행중)</ol>
 
 4. api 테스트 코드 작성
-<ol>test code (진행중)</ol>
+<ol> -test code (진행중)</ol>
 
 
 # 서버구동 방법
