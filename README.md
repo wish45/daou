@@ -27,6 +27,8 @@ C:\Users\newhyodong\daou
 ### 1. data.sql에 쿼리문으로 h2디비에 데이터 생성
 
 ### 2. http://localhost:8080/api/authenticate  를 호출하여 token 생성
+![image](https://user-images.githubusercontent.com/23456264/192147197-8407aa4b-fc49-48cc-aa9d-efa537b0a64b.png)
+
 
 ### 3. api 호출
 <ol>get- http://localhost:8080/payment</ol>
