@@ -12,8 +12,8 @@ C:\Users\newhyodong\daou
 1. 스케쥴러를 통한 결제정보 저정 api 구현
 
 2. 결제정보 등록, 수정, 삭제, 조회 api 구현
-<ol>application.yml에 설정된 ip에 한에서 접근가능</ol>
-<ol>aop를 통한 메서드 전후에 실행시간 로그기록</ol>
+<ol>*application.yml에 설정된 ip에 한에서 접근가능</ol>
+*<ol>aop를 통한 메서드 전후에 실행시간 로그기록</ol>
 
 3. api호출시 spring security를 통한 인증 및 인가 작업 구현
 <ol>rate limit(진행중)</ol>
