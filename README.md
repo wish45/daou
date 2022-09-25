@@ -29,8 +29,8 @@ C:\Users\newhyodong\daou
 2. http://localhost:8080/api/authenticate  를 호출하여 token 생성
 
 3. api 호출
-<ol>get- http://localhost:8080/payment
-<ol>post- http://localhost:8080/payment
+<ol>get- http://localhost:8080/payment</ol>
+<ol>post- http://localhost:8080/payment</ol>
 <ol>del - http://localhost:8080/payment/deletePayment
 <ol>patch - http://localhost:8080/payment/updatePayment
 
