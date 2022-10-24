@@ -1,4 +1,3 @@
-# daou
 
 ### 로그파일 저장 경로
 C:\Users\newhyodong\daou\log
