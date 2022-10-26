@@ -26,6 +26,7 @@ public class PaymentController {
     //조회
     @GetMapping
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
+    //@RateLimiter(name = "ApiRateLimit", fallbackMethod = "apiFallBack")
     public ResponseEntity<PaymentDataDTO> selectPayment(@Validated @RequestBody PaymentData paymentDataDTO) {
         paymentService.selectPayment(paymentDataDTO);
         return new ResponseEntity<>(new PaymentDataDTO(), HttpStatus.OK);
@@ -55,14 +56,14 @@ public class PaymentController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(paymentDataDTO);
     }
 
-    public ResponseEntity apiFallBack(String name, io.github.resilience4j.ratelimiter.RequestNotPermitted ex){
-        System.out.println("Rate limit applired no furder calls are accepted");
+    public ResponseEntity apiFallBack(io.github.resilience4j.ratelimiter.RequestNotPermitted ex){
+        System.out.println("Too many request");
 
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("Retry-After", "1");
 
         return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS)
                 .headers(responseHeaders)
-                .body("Too many rest - No furder calls are accepted");
+                .body("Too many request");
     }
 }
