@@ -3,13 +3,15 @@ package com.project.schedule.controller;
 import com.project.schedule.dto.PaymentDataDTO;
 import com.project.schedule.entity.PaymentData;
 import com.project.schedule.service.PaymentService;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-
+@RateLimiter(name = "ApiRateLimit", fallbackMethod = "apiFallBack")
 @RestController
 @RequestMapping("/payment")
 public class PaymentController {
@@ -51,5 +53,16 @@ public class PaymentController {
     public ResponseEntity<PaymentData> updateMemberInfo(@Validated @RequestBody PaymentData paymentDataDTO) {
         paymentService.updatePayment(paymentDataDTO);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(paymentDataDTO);
+    }
+
+    public ResponseEntity apiFallBack(String name, io.github.resilience4j.ratelimiter.RequestNotPermitted ex){
+        System.out.println("Rate limit applired no furder calls are accepted");
+
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.set("Retry-After", "1");
+
+        return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS)
+                .headers(responseHeaders)
+                .body("Too many rest - No furder calls are accepted");
     }
 }
