@@ -1,4 +1,3 @@
-# daou
 
 ### 로그파일 저장 경로
 C:\Users\newhyodong\daou\log
@@ -22,7 +21,7 @@ C:\Users\newhyodong\daou
 <ol>test code (진행중)</ol>
 
 
-# 서버구동 방법
+# 구동 방법
 
 ### 1. data.sql에 쿼리문으로 h2디비에 데이터 생성
 
