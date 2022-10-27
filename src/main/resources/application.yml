@@ -48,6 +48,7 @@ spring:
 
 
 resilience4j:
+  #ratelimiter 설정
   ratelimiter:
     configs:
       default:
@@ -57,3 +58,15 @@ resilience4j:
     instances:
       ApiRateLimit:
         baseConfig: default
+  #bulkhead 설정
+  bulkhead:
+    configs:
+      default:
+        maxConcurrentCalls: 5
+        maxWaitDuration: 0
+    instances:
+      ApiBulkhead:
+        baseConfig: default
+
+
+      

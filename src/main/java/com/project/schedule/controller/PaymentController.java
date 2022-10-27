@@ -3,6 +3,7 @@ package com.project.schedule.controller;
 import com.project.schedule.dto.PaymentDataDTO;
 import com.project.schedule.entity.PaymentData;
 import com.project.schedule.service.PaymentService;
+import io.github.resilience4j.bulkhead.annotation.Bulkhead;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RateLimiter(name = "ApiRateLimit", fallbackMethod = "apiFallBack")
+@Bulkhead(name = "ApiBulkhead", fallbackMethod = "apiFallBackBulk")
 @RestController
 @RequestMapping("/payment")
 public class PaymentController {
@@ -65,5 +67,15 @@ public class PaymentController {
         return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS)
                 .headers(responseHeaders)
                 .body("Too many request");
+    }
+    public ResponseEntity apiFallBackBulk(io.github.resilience4j.bulkhead.BulkheadFullException ex){
+        System.out.println("Too many concurrent request");
+
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.set("Retry-After", "1");
+
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
+                .headers(responseHeaders)
+                .body("Too many concurrent request");
     }
 }
