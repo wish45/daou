@@ -1,3 +1,6 @@
+### 스킬셋
+Java, Spring Boot, Jpa, MySQL, Java 11, JUnit, mokito
+
 
 ### 로그파일 저장 경로
 C:\Users\newhyodong\pjt\log
