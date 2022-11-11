@@ -37,21 +37,21 @@ public class TokenProvider implements InitializingBean {
         this.tokenValidityInMilliseconds = tokenValidityInSeconds * 1000;
     }
 
-    //key변수에 디코딩값 할당
+    //key변수에 디코딩값 할당하기 위함으로 메서드 오버라이딩
     @Override
     public void afterPropertiesSet() {
         byte[] keyBytes = Decoders.BASE64.decode(secret);
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    //token생성
+    //authentication객체에서 권한정보를 이용하여 토큰을 생성하는 메서드.
     public String createToken(Authentication authentication) {
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
 
         long now = (new Date()).getTime();
-        Date validity = new Date(now + this.tokenValidityInMilliseconds);
+        Date validity = new Date(now + this.tokenValidityInMilliseconds);     //만료시간
 
         return Jwts.builder()
                 .setSubject(authentication.getName())
@@ -61,9 +61,9 @@ public class TokenProvider implements InitializingBean {
                 .compact();
     }
 
-    //authentication 객체 return
+    //토큰을 파라미터로 받아서 authentication 객체를 리턴하는 메서드
     public Authentication getAuthentication(String token) {
-        Claims claims = Jwts
+        Claims claims = Jwts                    //토큰으로 claim만들어서 claim에서 권한정보를 빼내서 유저객체를 만듬.
                 .parserBuilder()
                 .setSigningKey(key)
                 .build()
@@ -75,9 +75,9 @@ public class TokenProvider implements InitializingBean {
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
 
-        User principal = new User(claims.getSubject(), "", authorities);
+        User principal = new User(claims.getSubject(), "", authorities);      //유저객체를
 
-        return new UsernamePasswordAuthenticationToken(principal, token, authorities);
+        return new UsernamePasswordAuthenticationToken(principal, token, authorities);  //유저정보, 토큰, 권한정보가지고 authentication객체를 리턴
     }
 
     //token validation 체크

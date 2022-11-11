@@ -19,23 +19,23 @@ public class PaymentDataDTO {
 
     @NotNull(message = "가입자수를 입력해주세요")
     @Size(min = 10, max = 50)
-    private String registCount;
+    private int registCount;
 
     @NotNull(message = "탈퇴자수를 입력해주세요")
     @Size(min = 10, max = 50)
-    private String leaveCount;
+    private int leaveCount;
 
     @NotNull(message = "결제금액을 입력해주세요")
     @Size(min = 10, max = 50)
-    private String payAmount;
+    private long payAmount;
 
     @NotNull(message = "사용금액을 입력해주세요")
     @Size(min = 10, max = 50)
-    private String usedAmount;
+    private long usedAmount;
 
     @NotNull(message = "매출금액을 입력해주세요")
     @Size(min = 10, max = 50)
-    private String salesAmount;
+    private long salesAmount;
 
 
 }

@@ -51,11 +51,11 @@ public class ScheduleService {
                         String[] array = line.split("\\|");     // | 구분자로 각 데이터 분리
 
                         bean.setRegDate(array[0].trim());
-                        bean.setRegistCount(array[1].trim());
-                        bean.setLeaveCount(array[2].trim());
-                        bean.setPayAmount(array[3].trim());
-                        bean.setUsedAmount(array[4].trim());
-                        bean.setSalesAmount(array[5].trim());
+                        bean.setRegistCount(Integer.parseInt(array[1].trim()));
+                        bean.setLeaveCount(Integer.parseInt(array[2].trim()));
+                        bean.setPayAmount(Long.parseLong(array[3].trim()));
+                        bean.setUsedAmount(Long.parseLong(array[4].trim()));
+                        bean.setSalesAmount(Long.parseLong(array[5].trim()));
 
                         list.add(bean);
 

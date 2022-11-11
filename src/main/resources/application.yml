@@ -38,7 +38,7 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update                 #세션팩토리가 시작될때 drop, create , alter를 하고 종료될때 drop한다는 의미
     properties:
       hibernate:
         format_sql: true

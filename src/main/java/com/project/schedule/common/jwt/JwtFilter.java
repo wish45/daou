@@ -20,20 +20,20 @@ public class JwtFilter extends GenericFilterBean {
     public static final String AUTHORIZATION_HEADER = "Authorization";
     private TokenProvider tokenProvider;
 
-    public JwtFilter(TokenProvider tokenProvider) {
+    public JwtFilter(TokenProvider tokenProvider) {    //토큰 프로바이더를 주입받는다.
         this.tokenProvider = tokenProvider;
     }
 
-    //토큰의 인증정보를 SecurityContext에 저장하는 역할수행
+    //jwt토큰의 인증정보를 SecurityContext에 저장하는 역할수행
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         //tokenProvider.
-        String jwt = resolveToken(httpServletRequest);
+        String jwt = resolveToken(httpServletRequest);    //리퀘스트에서 토큰을 받아서 jwt에 넣는다.
         String requestURI = httpServletRequest.getRequestURI();
 
-        if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
-            Authentication authentication = tokenProvider.getAuthentication(jwt);
+        if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {//토큰 유효성 검증
+            Authentication authentication = tokenProvider.getAuthentication(jwt);//토큰이 정상적이면 authentication객체를 받아옴.
             SecurityContextHolder.getContext().setAuthentication(authentication);    //SecurityContext에 저장
             logger.info("Security Context에 '{}' 인증 정보 저장, uri: {}", authentication.getName(), requestURI);
         } else {
@@ -43,9 +43,9 @@ public class JwtFilter extends GenericFilterBean {
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
-    //request header에서 토큰 정보를 꺼내오기 위한 메서드
+    //필터링을 하기위해서 토큰정보가 있어야 하니,
     private String resolveToken(HttpServletRequest request) {
-        String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
+        String bearerToken = request.getHeader(AUTHORIZATION_HEADER);     //  request header에서 토큰 정보를 꺼내오는메서드
 
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring(7);

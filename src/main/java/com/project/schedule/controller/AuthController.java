@@ -28,17 +28,18 @@ public class AuthController {
 
     @PostMapping("/authenticate")
     public ResponseEntity<TokenDTO> authorize(@Valid @RequestBody LoginDTO loginDTO) {
-        UsernamePasswordAuthenticationToken authenticationToken =
+        UsernamePasswordAuthenticationToken authenticationToken =    //토큰객체 생성
                 new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword());
 
+        //authenticate메서드가 실행될때 customuserDetailsService에서 loadUserByUsername메서드가 실행됨.
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        SecurityContextHolder.getContext().setAuthentication(authentication);//생성된 객체를 SecurityContext에 저장하고 
 
-        String jwt = tokenProvider.createToken(authentication);
+        String jwt = tokenProvider.createToken(authentication);//인증정보를 기준으로 jwt토큰을 만든다.
 
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
+        httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt); //reponseheader에 넣어주고
 
-        return new ResponseEntity<>(new TokenDTO(jwt), httpHeaders, HttpStatus.OK);
+        return new ResponseEntity<>(new TokenDTO(jwt), httpHeaders, HttpStatus.OK);//responsebody에도 넣어서 리턴한다.
     }
 }

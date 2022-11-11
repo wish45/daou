@@ -17,19 +17,19 @@ public class PaymentData {
     private String regDate;
 
     @Column(name = "regist_count")
-    private String registCount;
+    private int registCount;
 
     @Column(name = "leave_count")
-    private String leaveCount;
+    private int leaveCount;
 
     @Column(name = "pay_amount")
-    private String payAmount;
+    private long payAmount;
 
     @Column(name = "used_amount")
-    private String usedAmount;
+    private long usedAmount;
 
     @Column(name = "sales_amount")
-    private String salesAmount;
+    private long salesAmount;
 
 
 }
