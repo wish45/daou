@@ -19,8 +19,8 @@ C:\Users\newhyodong\pjt
 <ol>application.yml에 설정된 ip에 한에서 접근가능</ol>
 <ol>aop를 통한 메서드 전후에 실행시간 로그기록</ol>
 
-### 3. api호출시 spring security를 통한 인증 및 인가 작업 구현
-<ol>rate limit</ol>
+### 3. api호출시 JWT + spring security를 통한 인증 및 인가 작업 구현
+
 
 ### 4. api 테스트 코드 작성
 <ol>test code (진행중)</ol>
@@ -43,4 +43,7 @@ C:\Users\newhyodong\pjt
 ### 4. 스케쥴러는 매 12시정각에 C:\Users\newhyodong\pjt 위치에서 데이터를 읽어서 디비에 저장.
 
 ### 5. jmeter 를 활용한 부하테스트 진행
+
+### 6. 향후 계획
+<ol> DDD 중심으로 리팩토링하기 </ol>
 
