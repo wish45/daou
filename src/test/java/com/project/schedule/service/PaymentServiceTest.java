@@ -6,8 +6,12 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.InjectMocks;
 import org.mockito.Spy;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.validation.ConstraintViolation;
@@ -15,7 +19,11 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import static org.mockito.Mockito.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -38,6 +46,17 @@ class PaymentServiceTest {
         validator = factory.getValidator();
     }
 
+    private static Stream<PaymentData> testDto() {
+        return Stream.of(PaymentData.builder()
+                .leaveCount(new Random().nextInt(100))
+                .registCount(new Random().nextInt(100))
+                .payAmount((long)Math.abs(new Random().nextInt()))
+                .salesAmount((long)Math.abs(new Random().nextInt()))
+                .usedAmount((long)Math.abs(new Random().nextInt()))
+                .regDate("2022-07-22 00")
+                .build());
+    }
+
 
 
     @Test
@@ -45,12 +64,12 @@ class PaymentServiceTest {
     void addPayment() {
         //given
         PaymentData DTO = new PaymentData();
-        DTO.setPayAmount("45,100");
+        DTO.setPayAmount(45100);
         DTO.setRegDate("2022-07-22 00");
-        DTO.setLeaveCount("4");
-        DTO.setUsedAmount("27,300");
-        DTO.setRegistCount("32");
-        DTO.setSalesAmount("95,000");
+        DTO.setLeaveCount(4);
+        DTO.setUsedAmount(27300);
+        DTO.setRegistCount(32);
+        DTO.setSalesAmount(95000);
 
         //when
         paymentService.addPayment(DTO);
@@ -65,11 +84,11 @@ class PaymentServiceTest {
         //given
         PaymentData DTO = new PaymentData();
         DTO.setRegDate("");
-        DTO.setPayAmount("45,100");
-        DTO.setLeaveCount("4");
-        DTO.setUsedAmount("27,300");
-        DTO.setRegistCount("32");
-        DTO.setSalesAmount("95,000");
+        DTO.setPayAmount(45100);
+        DTO.setLeaveCount(4);
+        DTO.setUsedAmount(27300);
+        DTO.setRegistCount(32);
+        DTO.setSalesAmount(95000);
 
         //when
         Set<ConstraintViolation<PaymentData>> validate = validator.validate(DTO);
@@ -85,11 +104,11 @@ class PaymentServiceTest {
         //given
         PaymentData DTO = new PaymentData();
         DTO.setRegDate("2022-07-22 00");
-        DTO.setRegistCount("");
-        DTO.setPayAmount("45,100");
-        DTO.setLeaveCount("4");
-        DTO.setUsedAmount("27,300");
-        DTO.setSalesAmount("95,000");
+        DTO.setRegistCount(0);
+        DTO.setPayAmount(45100);
+        DTO.setLeaveCount(4);
+        DTO.setUsedAmount(27300);
+        DTO.setSalesAmount(95000);
 
         //when
         Set<ConstraintViolation<PaymentData>> validate = validator.validate(DTO);
@@ -106,11 +125,11 @@ class PaymentServiceTest {
         //given
         PaymentData DTO = new PaymentData();
         DTO.setRegDate("2022-07-22 00");
-        DTO.setRegistCount("32");
-        DTO.setLeaveCount("");
-        DTO.setPayAmount("45,100");
-        DTO.setUsedAmount("27,300");
-        DTO.setSalesAmount("95,000");
+        DTO.setRegistCount(32);
+        DTO.setLeaveCount(0);
+        DTO.setPayAmount(45100);
+        DTO.setUsedAmount(27300);
+        DTO.setSalesAmount(95000);
 
         //when
         Set<ConstraintViolation<PaymentData>> validate = validator.validate(DTO);
@@ -126,11 +145,11 @@ class PaymentServiceTest {
         //given
         PaymentData DTO = new PaymentData();
         DTO.setRegDate("2022-07-22 00");
-        DTO.setRegistCount("32");
-        DTO.setLeaveCount("4");
-        DTO.setPayAmount("");
-        DTO.setUsedAmount("27,300");
-        DTO.setSalesAmount("95,000");
+        DTO.setRegistCount(32);
+        DTO.setLeaveCount(4);
+        DTO.setPayAmount(0);
+        DTO.setUsedAmount(27300);
+        DTO.setSalesAmount(95000);
 
         //when
         Set<ConstraintViolation<PaymentData>> validate = validator.validate(DTO);
@@ -146,11 +165,11 @@ class PaymentServiceTest {
         //given
         PaymentData DTO = new PaymentData();
         DTO.setRegDate("2022-07-22 00");
-        DTO.setRegistCount("32");
-        DTO.setLeaveCount("4");
-        DTO.setPayAmount("45,100");
-        DTO.setUsedAmount("");
-        DTO.setSalesAmount("95,000");
+        DTO.setRegistCount(32);
+        DTO.setLeaveCount(4);
+        DTO.setPayAmount(45100);
+        DTO.setUsedAmount(0);
+        DTO.setSalesAmount(95000);
 
         //when
         Set<ConstraintViolation<PaymentData>> validate = validator.validate(DTO);
@@ -166,11 +185,11 @@ class PaymentServiceTest {
         //given
         PaymentData DTO = new PaymentData();
         DTO.setRegDate("2022-07-22 00");
-        DTO.setRegistCount("32");
-        DTO.setLeaveCount("4");
-        DTO.setPayAmount("45,100");
-        DTO.setUsedAmount("27,300");
-        DTO.setSalesAmount("");
+        DTO.setRegistCount(32);
+        DTO.setLeaveCount(4);
+        DTO.setPayAmount(45100);
+        DTO.setUsedAmount(27300);
+        DTO.setSalesAmount(0);
 
         //when
         Set<ConstraintViolation<PaymentData>> validate = validator.validate(DTO);
@@ -180,12 +199,17 @@ class PaymentServiceTest {
             assertThat(error.getMessage()).isEqualTo("매출금액을 입력해주세요");
         });
     }
-    @Test
+
+    @ParameterizedTest
+    @MethodSource("testDto")
     @DisplayName("결제금액 조회 테스트")
     void selectPayment() {
         //given
-        //given(paymentRepository.findById())
 
+        //when
+
+        //then
+        
     }
     @Test
     @DisplayName("결제금액 삭제 테스트")

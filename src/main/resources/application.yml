@@ -29,16 +29,23 @@ spring:
     console:
       enabled: true
 
+  #datasource:
+  #  url: jdbc:h2:tcp://localhost/~/jpashop
+  #  driver-class-name: org.h2.Driver
+  #  username: sa
+  #  password:
   datasource:
-    url: jdbc:h2:tcp://localhost/~/jpashop
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
-
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/stock_example
+    username: root
+    password: 1234
+    hikari:
+      maximum-pool-size: 40
+      
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    #database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
-      ddl-auto: update                 #세션팩토리가 시작될때 drop, create , alter를 하고 종료될때 drop한다는 의미
+      ddl-auto: create                 #세션팩토리가 시작될때 drop, create , alter를 하고 종료될때 drop한다는 의미
     properties:
       hibernate:
         format_sql: true
