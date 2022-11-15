@@ -33,9 +33,8 @@ class UserPaymentServiceTest {
 
     @BeforeEach
     public void before(){
-        //Merchants asd = new Merchants();
         Date Date = null;
-        CardUsages usage = new CardUsages(1L,Date,Category.PAY,10000L,1234L);
+        CardUsages usage = new CardUsages(1L,Date,Category.PAY,10000L,1234L,new Merchants());
         userPaymentRepository.saveAndFlush(usage);
     }
 
@@ -62,15 +61,13 @@ class UserPaymentServiceTest {
     @Test
     //@ParameterizedTest
     //@MethodSource("dummyDto")
-    @DisplayName("비동기 100개요청 성공 테스트")
-    //@Async
+    @DisplayName("비동기 성공 테스트")
     public void test() throws InterruptedException {
         int threadCont = 100;
         ExecutorService excutorService = Executors.newFixedThreadPool(32);
         CountDownLatch latch = new CountDownLatch(threadCont);
-        //Merchants asd = new Merchants();
         Date Date = null;
-        CardUsages dto = new CardUsages(1L,Date,Category.PAY,100L,1234L);
+        CardUsages dto = new CardUsages(1L,Date,Category.PAY,100L,1234L,new Merchants());
 
         for(int i=0; i<threadCont; i++){
             excutorService.submit(()->{
